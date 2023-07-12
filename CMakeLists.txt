@@ -9,6 +9,12 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 # Declare all CMake settings
 set(${PROJECT_NAME_UPPER}_BUILD_SHARED_LIBRARY ON CACHE BOOL "build shared libraries instead of static ones")
 set(${PROJECT_NAME_UPPER}_BUILD_TESTS OFF CACHE BOOL "build testrunner for ${PROJECT_NAME}")
+set(${PROJECT_NAME_UPPER}_ENABLE_PROFILING                  OFF CACHE BOOL "Enable profiling macros.")
+set(${PROJECT_NAME_UPPER}_ENABLE_OUT_OF_RANGE_CHECKS        OFF CACHE BOOL "Enable macros for checking out-of-range errors.")
+set(${PROJECT_NAME_UPPER}_ENABLE_DIVISION_BY_ZERO_CHECKS    OFF CACHE BOOL "Enable macros for checking division by zero errors.")
+set(${PROJECT_NAME_UPPER}_ENABLE_ADDRESS_SANITIZER          OFF CACHE BOOL "Compile with address sanitizer.")
+set(${PROJECT_NAME_UPPER}_ENABLE_THREAD_SANITIZER           OFF CACHE BOOL "Compile with thread sanitizer.")
+set(${PROJECT_NAME_UPPER}_ENABLE_UB_SANITIZER               OFF CACHE BOOL "Compile with undefined behaviour sanitizer.")
 
 # Language server
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -20,6 +26,36 @@ set(CMAKE_INSTALL_RPATH "$ORIGIN")
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/cie/lib")
 find_package(cieutils REQUIRED)
 find_package(Eigen3 REQUIRED)
+
+# Compile definitions
+if(${PROJECT_NAME_UPPER}_ENABLE_PROFILING)
+    add_compile_definitions(CIE_ENABLE_PROFILING=1)
+endif()
+
+if(${PROJECT_NAME_UPPER}_ENABLE_OUT_OF_RANGE_CHECKS)
+    add_compile_definitions(CIE_ENABLE_OUT_OF_RANGE_CHECKS=1)
+endif()
+
+if(${PROJECT_NAME_UPPER}_ENABLE_DIVISION_BY_ZERO_CHECKS)
+    add_compile_definitions(CIE_ENABLE_DIVISION_BY_ZERO_CHECKS=1)
+endif()
+
+if(${PROJECT_NAME_UPPER}_ENABLE_ADDRESS_SANITIZER)
+    add_compile_options("-fsanitize=address")
+    add_link_options("-fsanitize=address")
+endif()
+
+if(${PROJECT_NAME_UPPER}_ENABLE_THREAD_SANITIZER)
+    add_compile_options("-fsanitize=thread")
+    add_link_options("-fsanitize=thread")
+endif()
+
+if(${PROJECT_NAME_UPPER}_ENABLE_UB_SANITIZER)
+    add_compile_options("-fsanitize=undefined")
+    add_link_options("-fsanitize=undefined")
+endif()
+
+add_compile_options(-Wall -Wpedantic -Wextra -Werror)
 
 # Build main library
 file(GLOB_RECURSE sources "${CMAKE_CURRENT_SOURCE_DIR}/packages/*/src/*.cpp")
@@ -35,12 +71,12 @@ target_include_directories(${PROJECT_NAME}
                            PUBLIC
                            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-target_include_directories(${PROJECT_NAME} PUBLIC "${EIGEN3_INCLUDE_DIR}")
-target_include_directories(${PROJECT_NAME} PUBLIC "${EIGEN3_INCLUDE_DIR}/unsupported")
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC "${EIGEN3_INCLUDE_DIR}")
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC "${EIGEN3_INCLUDE_DIR}/unsupported")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets LIBRARY DESTINATION "cie/lib")
-install(DIRECTORY packages DESTINATION "cie/include" FILES_MATCHING PATTERN "*.hpp")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}packages" DESTINATION "cie/include" FILES_MATCHING PATTERN "*.hpp")
 
 # Build test executable
 if (${PROJECT_NAME_UPPER}_BUILD_TESTS)
@@ -60,6 +96,7 @@ install(EXPORT ${PROJECT_NAME}Targets FILE ${PROJECT_NAME}Targets.cmake DESTINAT
 install(EXPORT ${PROJECT_NAME}Targets FILE ${PROJECT_NAME}Targets.cmake DESTINATION "cie/lib/cmake/${PROJECT_NAME}")
 
 # Package
+include(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_VENDOR "")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "")
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})

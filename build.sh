@@ -13,6 +13,7 @@ print_help() {
     echo "-b build-dir      : build directory"
     echo "-i install-dir    : install directory (python site package by default)"
     echo "-c compiler       : C++ compiler to use"
+    echo "-o [opts]         : options/arguments to pass on to CMake. Semicolon (;) delimited, or defined repeatedly."
 }
 
 if ! command -v python3 &>/dev/null; then
@@ -33,8 +34,9 @@ installDir=$(get_site_packages_dir)
 compiler=g++
 generator="Unix Makefiles"
 cCacheFlag=""
+cmakeArguments=""
 
-while getopts "hpt:b:i:c:" arg; do
+while getopts "hpt:b:i:c:o:" arg; do
     case "$arg" in
         h)  # Print help and exit without doing anything
             print_help
@@ -55,6 +57,9 @@ while getopts "hpt:b:i:c:" arg; do
             ;;
         c)  # Set C++ compiler
             compiler="$OPTARG"
+            ;;
+        o)  # Append CMake arguments
+            cmakeArguments="$cmakeArguments;$OPTARG"
             ;;
         \?) # Unrecognized argument
             echo "Error: unrecognized argument $arg"
@@ -92,6 +97,7 @@ if ! cmake                                                  \
     "-D${projectNameUpper}_BUILD_SHARED_LIBRARY:BOOL=ON"    \
     "-D${projectNameUpper}_BUILD_TESTS:BOOL=ON"             \
     "$cCacheFlag"                                           \
+    $(echo $cmakeArguments | tr '\;' '\n')                  \
     ; then
     exit $?
 fi
