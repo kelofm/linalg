@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: source penv/bin/activate && ./linalg/build.sh -t Debug -o "-DLINALG_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
       - name: Run tests
-        run: ./build/bin/linalg_testrunner
+        run: ./linalg/build/bin/linalg_testrunner
 
   generate-docs:
     needs: testrunner
