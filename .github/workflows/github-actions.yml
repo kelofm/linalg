@@ -68,7 +68,7 @@ jobs:
       - name: Generate docs
         run: |
           cd linalg/docs
-          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/cieutils_doxygen_tagfile" ) | doxygen -
+          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/cieutils_doxygen_tagfile=../../../cieutils/docs/html" ) | doxygen -
       - name: Generate root index.html
         run: echo "<meta http-equiv=\"refresh\" content=\"0; docs/html/index.html\">" > index.html
       - name: Update remote
