@@ -11,48 +11,56 @@
 namespace cie::linalg {
 
 
-template <class EigenType, class BaseType>
-AbsEigenVector<EigenType,BaseType>::AbsEigenVector( BaseType& r_base )
-requires concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>
-    : _r_base( r_base ),
-      _eigenVector( &r_base[0], r_base.size() )
+template <class TEigen, class TBase>
+AbsEigenVector<TEigen,TBase>::AbsEigenVector() noexcept
+    : _p_base(),
+      _eigenVector(nullptr, 0)
 {
 }
 
 
 template <class EigenType, class BaseType>
-AbsEigenVector<EigenType,BaseType>::AbsEigenVector( BaseType& r_base )
+AbsEigenVector<EigenType,BaseType>::AbsEigenVector(BaseType& r_base)
+requires concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>
+    : _p_base(&r_base),
+      _eigenVector(r_base.data(), r_base.size())
+{
+}
+
+
+template <class EigenType, class BaseType>
+AbsEigenVector<EigenType,BaseType>::AbsEigenVector(BaseType& r_base)
 requires (!concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>)
-    : _r_base( r_base ),
-      _eigenVector( &r_base[0] )
+    : _p_base(&r_base),
+      _eigenVector(r_base.data())
 {
 }
 
 
 template <class EigenType, class BaseType>
-AbsEigenVector<EigenType, BaseType>::AbsEigenVector( BaseType& r_base, typename AbsEigenVector<EigenType, BaseType>::size_type size )
+AbsEigenVector<EigenType, BaseType>::AbsEigenVector(BaseType& r_base, typename AbsEigenVector<EigenType, BaseType>::size_type size)
 requires concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>
-    : _r_base( r_base ),
-      _eigenVector( &r_base[0], size )
+    : _p_base(&r_base),
+      _eigenVector(r_base.data(), size)
 {
 }
 
 
 template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::value_type&
-AbsEigenVector<EigenType,BaseType>::operator[]( typename AbsEigenVector<EigenType,BaseType>::size_type index )
+AbsEigenVector<EigenType,BaseType>::operator[](typename AbsEigenVector<EigenType,BaseType>::size_type index)
 requires concepts::NonConst<BaseType>
 {
-    return _r_base[index];
+    return _p_base.value()->operator[](index);
 }
 
 
 template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::value_type&
-AbsEigenVector<EigenType,BaseType>::at( typename AbsEigenVector<EigenType,BaseType>::size_type index )
+AbsEigenVector<EigenType,BaseType>::at(typename AbsEigenVector<EigenType,BaseType>::size_type index)
 requires concepts::NonConst<BaseType>
 {
-    return this->operator[]( index );
+    return this->operator[](index);
 }
 
 
@@ -61,7 +69,7 @@ inline typename AbsEigenVector<EigenType,BaseType>::iterator
 AbsEigenVector<EigenType,BaseType>::begin()
 requires concepts::NonConst<BaseType>
 {
-    return _r_base.begin();
+    return _p_base.value()->begin();
 }
 
 
@@ -70,23 +78,23 @@ inline typename AbsEigenVector<EigenType,BaseType>::iterator
 AbsEigenVector<EigenType,BaseType>::end()
 requires concepts::NonConst<BaseType>
 {
-    return _r_base.end();
+    return _p_base.value()->end();
 }
 
 
 template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::value_type
-AbsEigenVector<EigenType,BaseType>::operator[]( typename AbsEigenVector<EigenType,BaseType>::size_type index ) const
+AbsEigenVector<EigenType,BaseType>::operator[](typename AbsEigenVector<EigenType,BaseType>::size_type index) const
 {
-    return _r_base[index];
+    return _p_base.value()->operator[](index);
 }
 
 
 template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::value_type
-AbsEigenVector<EigenType,BaseType>::at( typename AbsEigenVector<EigenType,BaseType>::size_type index ) const
+AbsEigenVector<EigenType,BaseType>::at(typename AbsEigenVector<EigenType,BaseType>::size_type index) const
 {
-    return this->operator[]( index );
+    return this->operator[](index);
 }
 
 
@@ -94,7 +102,7 @@ template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::const_iterator
 AbsEigenVector<EigenType,BaseType>::begin() const
 {
-    return _r_base.begin();
+    return _p_base.value()->begin();
 }
 
 
@@ -102,7 +110,7 @@ template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::const_iterator
 AbsEigenVector<EigenType,BaseType>::end() const
 {
-    return _r_base.end();
+    return _p_base.value()->end();
 }
 
 
@@ -110,7 +118,7 @@ template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::size_type
 AbsEigenVector<EigenType,BaseType>::size() const
 {
-    return _r_base.size();
+    return _p_base.value()->size();
 }
 
 
@@ -118,7 +126,7 @@ template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::pointer
 AbsEigenVector<EigenType,BaseType>::data() noexcept
 {
-    return _r_base.data();
+    return _p_base.value()->data();
 }
 
 
@@ -126,7 +134,7 @@ template <class EigenType, class BaseType>
 inline typename AbsEigenVector<EigenType,BaseType>::const_pointer
 AbsEigenVector<EigenType,BaseType>::data() const noexcept
 {
-    return _r_base.data();
+    return _p_base.value()->data();
 }
 
 
@@ -160,7 +168,7 @@ inline BaseType&
 AbsEigenVector<EigenType,BaseType>::base()
 requires concepts::NonConst<BaseType>
 {
-    return _r_base;
+    return *_p_base.value();
 }
 
 
@@ -168,7 +176,7 @@ template <class EigenType, class BaseType>
 inline const BaseType&
 AbsEigenVector<EigenType,BaseType>::base() const
 {
-    return _r_base;
+    return *_p_base.value();
 }
 
 
@@ -176,7 +184,16 @@ template <class EigenType, class BaseType>
 inline
 AbsEigenVector<EigenType,BaseType>::operator const BaseType&() const
 {
-    return _r_base;
+    return *_p_base.value();
+}
+
+
+template <class TEigen, class TBase>
+void
+AbsEigenVector<TEigen,TBase>::setBase(TBase& r_wrapped)
+{
+    _p_base = &r_wrapped;
+    this->updateEigen();
 }
 
 
@@ -186,7 +203,7 @@ AbsEigenVector<EigenType, BaseType>::updateEigen()
 requires concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>
 {
     // Placement new => no allocation involved
-    new (&_eigenVector) typename AbsEigenVector<EigenType, BaseType>::eigen_type( &_r_base[0], _r_base.size() );
+    new (&_eigenVector) typename AbsEigenVector<EigenType, BaseType>::eigen_type(_p_base.value()->data(), _p_base.value()->size());
 }
 
 
@@ -196,7 +213,7 @@ AbsEigenVector<EigenType, BaseType>::updateEigen()
 requires (!concepts::ConstructibleFrom<EigenType, typename AbsEigenVector<EigenType, BaseType>::value_type*, typename AbsEigenVector<EigenType, BaseType>::size_type>)
 {
     // Placement new => no allocation involved
-    new (&_eigenVector) typename AbsEigenVector<EigenType, BaseType>::eigen_type( &_r_base[0] );
+    new (&_eigenVector) typename AbsEigenVector<EigenType, BaseType>::eigen_type(_p_base.value()->data);
 }
 
 

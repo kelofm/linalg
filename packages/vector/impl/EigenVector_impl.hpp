@@ -13,107 +13,102 @@ namespace cie::linalg {
 
 template <class ValueType, class ...Arguments>
 EigenVector<ValueType,Arguments...>::EigenVector()
-    : EigenVector<ValueType,Arguments...>::base_type( _container, 0 ),
+    : EigenVector<ValueType,Arguments...>::base_type(),
       _container()
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( const std::initializer_list<typename EigenVector<ValueType,Arguments...>::value_type>&& r_components )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_components.size() ),
-      _container( r_components )
+EigenVector<ValueType,Arguments...>::EigenVector(const std::initializer_list<typename EigenVector<ValueType,Arguments...>::value_type>&& r_components)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(r_components)
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( const EigenVector<ValueType,Arguments...>::eigen_type& r_eigenArray )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_eigenArray.size() ),
-      _container( r_eigenArray.size() )
+EigenVector<ValueType,Arguments...>::EigenVector(const EigenVector<ValueType,Arguments...>::eigen_type& r_eigenArray)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(r_eigenArray.size())
 {
     std::copy(
         r_eigenArray.begin(),
         r_eigenArray.end(),
         _container.begin()
     );
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( typename EigenVector<ValueType,Arguments...>::container_type&& r_vector )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_vector.size() ),
-      _container( std::move(r_vector) )
+EigenVector<ValueType,Arguments...>::EigenVector(typename EigenVector<ValueType,Arguments...>::container_type&& r_vector)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(std::move(r_vector))
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( const typename EigenVector<ValueType,Arguments...>::container_type& r_vector )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_vector.size() ),
-      _container( r_vector )
+EigenVector<ValueType,Arguments...>::EigenVector(const typename EigenVector<ValueType,Arguments...>::container_type& r_vector)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(r_vector)
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( EigenVector<ValueType,Arguments...>&& r_rhs )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_rhs.size() ),
-      _container( std::move(r_rhs._container) )
+EigenVector<ValueType,Arguments...>::EigenVector(EigenVector<ValueType,Arguments...>&& r_rhs)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(std::move(r_rhs._container))
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( const EigenVector<ValueType,Arguments...>& r_rhs )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_rhs.size() ),
-      _container( r_rhs._container )
+EigenVector<ValueType,Arguments...>::EigenVector(const EigenVector<ValueType,Arguments...>& r_rhs)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(r_rhs._container)
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
-EigenVector<ValueType,Arguments...>::EigenVector( typename EigenVector<ValueType,Arguments...>::size_type size )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, size ),
-      _container( size )
+EigenVector<ValueType,Arguments...>::EigenVector(typename EigenVector<ValueType,Arguments...>::size_type size)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(size)
 {
-    this->updateEigen();
+    this->setBase(_container);
 }
 
 
 template <class ValueType, class ...Arguments>
 template <class ContainerType>
 requires concepts::Container<ContainerType, ValueType>
-EigenVector<ValueType,Arguments...>::EigenVector( const ContainerType& r_components )
-    : EigenVector<ValueType,Arguments...>::base_type( _container, r_components.size() ),
-      _container( r_components.size() )
+EigenVector<ValueType,Arguments...>::EigenVector(const ContainerType& r_components)
+    : EigenVector<ValueType,Arguments...>::base_type(),
+      _container(r_components.size())
 {
-    std::copy(
-        r_components.begin(),
-        r_components.end(),
-        this->begin()
-    );
-    this->updateEigen();
+    std::copy(r_components.begin(),
+              r_components.end(),
+              this->begin());
 }
 
 
 template <class ValueType, class ...Arguments>
 inline EigenVector<ValueType,Arguments...>&
-EigenVector<ValueType,Arguments...>::operator=( EigenVector<ValueType,Arguments...>&& r_rhs )
+EigenVector<ValueType,Arguments...>::operator=(EigenVector<ValueType,Arguments...>&& r_rhs)
 {
-    CIE_CHECK(
-        r_rhs.size() == this->size(),
-        "lhs size (" + std::to_string(this->size()) + ") != rhs size (" + std::to_string(r_rhs.size()) + ")"
-    )
+    CIE_CHECK(r_rhs.size() == this->size(),
+              "lhs size (" + std::to_string(this->size()) + ") != rhs size (" + std::to_string(r_rhs.size()) + ")")
 
-    _container = std::move( r_rhs._container );
+    _container = std::move(r_rhs._container);
     this->updateEigen();
 
     return *this;
@@ -122,7 +117,7 @@ EigenVector<ValueType,Arguments...>::operator=( EigenVector<ValueType,Arguments.
 
 template <class ValueType, class ...Arguments>
 inline EigenVector<ValueType,Arguments...>&
-EigenVector<ValueType,Arguments...>::operator=( const EigenVector<ValueType,Arguments...>& r_rhs )
+EigenVector<ValueType,Arguments...>::operator=(const EigenVector<ValueType,Arguments...>& r_rhs)
 {
     CIE_CHECK(
         r_rhs.size() == this->size(),

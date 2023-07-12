@@ -1,12 +1,16 @@
 #ifndef CIE_LINALG_MATRIX_IMPL_HPP
 #define CIE_LINALG_MATRIX_IMPL_HPP
 
+// --- Linalg Includes ---
+#include "packages/types/inc/matrix.hpp"
+
 // --- Utility Includes ---
 #include "packages/macros/inc/checks.hpp"
 #include "packages/stl_extension/inc/StaticArray.hpp"
 
 // --- STL Includes ---
 #include <string>
+
 
 namespace cie::linalg {
 
@@ -76,8 +80,7 @@ Matrix<TValue>::Matrix( const std::vector<DoubleVector>& vectorOfRows ) :
 template <concepts::Numeric TValue>
 inline TValue& Matrix<TValue>::operator()( Size i, Size j )
 {
-    checkIndices(i,j);
-
+    CIE_OUT_OF_RANGE_CHECK(i < _size1 && j < _size2)
     if (!_transpose)
         return data_[i * size2_ + j];
     else
@@ -88,8 +91,7 @@ inline TValue& Matrix<TValue>::operator()( Size i, Size j )
 template <concepts::Numeric TValue>
 inline TValue Matrix<TValue>::operator()( Size i, Size j ) const
 {
-    checkIndices(i, j);
-
+    CIE_OUT_OF_RANGE_CHECK(i < _size1 && j < _size2)
     if (!_transpose)
         return data_[i * size2_ + j];
     else
@@ -178,14 +180,6 @@ inline void Matrix<TValue>::transpose()
     size1_      = size2_;
     size2_      = temp;
     _transpose  = !_transpose;
-}
-
-
-template <concepts::Numeric TValue>
-inline void Matrix<TValue>::checkIndices(Size i, Size j) const
-{
-    CIE_OUT_OF_RANGE_CHECK(  i < size1_ )
-    CIE_OUT_OF_RANGE_CHECK(  j < size2_ )
 }
 
 

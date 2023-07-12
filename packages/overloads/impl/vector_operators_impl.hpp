@@ -17,11 +17,7 @@ requires (std::is_same_v<ValueType, typename BaseType::value_type> && concepts::
 void
 operator*=( AbsEigenVector<EigenType,BaseType>& r_lhs, ValueType rhs )
 {
-    CIE_BEGIN_EXCEPTION_TRACING
-
     r_lhs.wrapped() *= rhs;
-
-    CIE_END_EXCEPTION_TRACING
 }
 
 
@@ -31,11 +27,14 @@ void
 operator+=( AbsEigenVector<EigenType, BaseType>& r_lhs,
             const AbsEigenVector<EigenType, BaseType>& r_rhs )
 {
-    CIE_BEGIN_EXCEPTION_TRACING
-
+    #ifdef __GNUG__
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Warray-bounds"
+    #endif
     r_lhs.wrapped() += r_rhs.wrapped();
-
-    CIE_END_EXCEPTION_TRACING
+    #ifdef __GNUG__
+    #pragma GCC diagnostic pop
+    #endif
 }
 
 
@@ -45,11 +44,14 @@ void
 operator-=( AbsEigenVector<EigenType, BaseType>& r_lhs,
             const AbsEigenVector<EigenType, BaseType>& r_rhs )
 {
-    CIE_BEGIN_EXCEPTION_TRACING
-
+    #ifdef __GNUG__
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Warray-bounds"
+    #endif
     r_lhs.wrapped() -= r_rhs.wrapped();
-
-    CIE_END_EXCEPTION_TRACING
+    #ifdef __GNUG__
+    #pragma GCC diagnostic pop
+    #endif
 }
 
 

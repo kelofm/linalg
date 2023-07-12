@@ -34,27 +34,27 @@ public:
 public:
     EigenVector();
 
-    EigenVector( size_type size );
+    EigenVector(size_type size);
 
-    EigenVector( const std::initializer_list<value_type>&& r_components );
+    EigenVector(const std::initializer_list<value_type>&& r_components);
 
-    EigenVector( container_type&& r_vector );
+    EigenVector(container_type&& r_vector);
 
-    EigenVector( const container_type& r_vector );
+    EigenVector(const container_type& r_vector);
 
-    EigenVector( const eigen_type& r_eigenArray );
+    EigenVector(const eigen_type& r_eigenArray);
 
-    EigenVector( EigenVector<ValueType,Arguments...>&& r_rhs );
+    EigenVector(EigenVector<ValueType,Arguments...>&& r_rhs);
 
-    EigenVector( const EigenVector<ValueType,Arguments...>& r_rhs );
+    EigenVector(const EigenVector<ValueType,Arguments...>& r_rhs);
 
     template <class ContainerType>
     requires concepts::Container<ContainerType,ValueType>
-    EigenVector( const ContainerType& r_components );
+    EigenVector(const ContainerType& r_components);
 
-    EigenVector<ValueType,Arguments...>& operator=( EigenVector<ValueType,Arguments...>&& r_rhs );
+    EigenVector<ValueType,Arguments...>& operator=(EigenVector<ValueType,Arguments...>&& r_rhs);
 
-    EigenVector<ValueType,Arguments...>& operator=( const EigenVector<ValueType,Arguments...>& r_rhs );
+    EigenVector<ValueType,Arguments...>& operator=(const EigenVector<ValueType,Arguments...>& r_rhs);
 
 private:
     container_type _container;

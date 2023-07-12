@@ -10,6 +10,7 @@
 
 // --- STL Includes ---
 #include <ostream>
+#include <optional>
 
 
 namespace cie::linalg {
@@ -50,9 +51,9 @@ public:
     AbsEigenVector(TBase& r_wrapped, size_type size)
     requires concepts::ConstructibleFrom<TEigen, value_type*, size_type>;
 
-    AbsEigenVector(AbsEigenVector<TEigen, TBase>&& r_rhs) = default;
+    AbsEigenVector(AbsEigenVector&& r_rhs) = default;
 
-    AbsEigenVector<TEigen,TBase>& operator=(AbsEigenVector<TEigen,TBase>&& r_rhs) = default;
+    AbsEigenVector& operator=(AbsEigenVector&& r_rhs) noexcept = default;
 
     virtual ~AbsEigenVector() {static_assert(concepts::Container<AbsEigenVector>);}
 
@@ -97,6 +98,10 @@ public:
     operator const TBase&() const;
 
 protected:
+    AbsEigenVector() noexcept;
+
+    void setBase(TBase& r_wrapped);
+
     void updateEigen()
     requires concepts::ConstructibleFrom<TEigen, value_type*, size_type>;
 
@@ -104,12 +109,10 @@ protected:
     requires (!concepts::ConstructibleFrom<TEigen, value_type*, size_type>);
 
 private:
-    AbsEigenVector() = delete;
-
-    AbsEigenVector(const AbsEigenVector<TEigen, TBase>& r_rhs) = delete;
+    AbsEigenVector(const AbsEigenVector& r_rhs) = delete;
 
 private:
-    base_type& _r_base;
+    std::optional<base_type*> _p_base;
 
     eigen_type _eigenVector;
 }; // class AbsEigenVector
