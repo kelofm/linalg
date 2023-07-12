@@ -47,8 +47,9 @@ jobs:
     needs: testrunner
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
+      - name: Clone dependencies
         run: |
+          ../env
           git clone https://github.com/kelofm/cieutils.git --depth 1
           git clone https://github.com/kelofm/linalg.git --depth 1
       - name: Install packages
