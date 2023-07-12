@@ -1,0 +1,4 @@
+catch
+pybind11-dev
+nlohmann-json3-dev
+libeigen3-dev
