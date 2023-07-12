@@ -25,6 +25,8 @@ jobs:
         sanitizer: [ADDRESS, THREAD, UB]
     runs-on: ubuntu-latest
     steps:
+      - name: Create python venv
+        run: python3 -m venv penv
       - name: Clone repository
         run: |
           git clone https://github.com/kelofm/cieutils.git --depth 1
@@ -37,9 +39,9 @@ jobs:
       - name: Build dependencies
         # OpenMPI is leaking all over the place (according to ASAN), so disable it for now
         #run: ./build.sh -t Debug -o "-CIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON" -o "-DCIEUTILS_ENABLE_MPI=ON"
-        run: ./cieutils/build.sh -t Debug -o "-DCIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
+        run: source penv/bin/activate && ./cieutils/build.sh -t Debug -o "-DCIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
       - name: Build
-        run: ./linalg/build.sh -t Debug -o "-DLINALG_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
+        run: source penv/bin/activate && ./linalg/build.sh -t Debug -o "-DLINALG_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
       - name: Run tests
         run: ./build/bin/linalg_testrunner
 
@@ -49,7 +51,6 @@ jobs:
     steps:
       - name: Clone dependencies
         run: |
-          ../env
           git clone https://github.com/kelofm/cieutils.git --depth 1
           git clone https://github.com/kelofm/linalg.git --depth 1
       - name: Install packages
