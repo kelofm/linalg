@@ -73,9 +73,12 @@ jobs:
           cd linalg/docs
           ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/html/cieutils_doxygen_tagfile" ) | doxygen -
       - name: Generate root index.html
-        run: echo "<meta http-equiv=\"refresh\" content=\"0; docs/html/index.html\">" > index.html
+        run: |
+          cd linalg
+          echo "<meta http-equiv=\"refresh\" content=\"0; docs/html/index.html\">" > index.html
       - name: Update remote
         run: |
+          cd linalg
           git add index.html docs/html -f
           git commit -m "update docs"
           git push -f https://$USER_NAME:$GITHUB_TOKEN@github.com/kelofm/linalg.git doc
