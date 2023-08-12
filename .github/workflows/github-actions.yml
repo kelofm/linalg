@@ -57,8 +57,8 @@ jobs:
         run: sudo apt install findutils doxygen graphviz
       - name: Update doc branch with current master
         run: |
-          git config --local user.name $USER_NAME
-          git config --local user.email "in@valid.email"
+          git config user.name $USER_NAME
+          git config user.email "in@valid.email"
           git branch -D doc &>/dev/null || true
           git checkout -b doc
         env:
