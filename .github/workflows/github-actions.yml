@@ -49,28 +49,29 @@ jobs:
     needs: testrunner
     runs-on: ubuntu-latest
     steps:
+      - name: Install packages
+        run: sudo apt install findutils doxygen graphviz
       - name: Clone dependencies
         run: |
           git clone https://github.com/kelofm/cieutils.git --depth 1
           git clone https://github.com/kelofm/linalg.git --depth 1
-      - name: Install packages
-        run: sudo apt install findutils doxygen graphviz
-      - name: Update doc branch with current master
-        run: |
-          git config user.name $USER_NAME
-          git config user.email "in@valid.email"
-          git branch -D doc &>/dev/null || true
-          git checkout -b doc
-        env:
-          USER_NAME: matekelemen
       - name: Generate docs for dependencies
         run: |
           cd cieutils/docs
           doxygen doxyfile
+      - name: Update doc branch with current master
+        run: |
+          cd linalg
+          git config --local user.name $USER_NAME
+          git config --local user.email "in@valid.email"
+          git branch -D doc &>/dev/null || true
+          git checkout -b doc
+        env:
+          USER_NAME: matekelemen
       - name: Generate docs
         run: |
           cd linalg/docs
-          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/cieutils_doxygen_tagfile=../../../cieutils/docs/html" ) | doxygen -
+          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/html/cieutils_doxygen_tagfile" ) | doxygen -
       - name: Generate root index.html
         run: echo "<meta http-equiv=\"refresh\" content=\"0; docs/html/index.html\">" > index.html
       - name: Update remote
