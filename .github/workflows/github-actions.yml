@@ -25,6 +25,8 @@ jobs:
         sanitizer: [ADDRESS, THREAD, UB]
     runs-on: ubuntu-latest
     steps:
+      - name: Create python venv
+        run: python3 -m venv penv
       - name: Clone repository
         run: |
           git clone https://github.com/kelofm/cieutils.git --depth 1
@@ -37,17 +39,17 @@ jobs:
       - name: Build dependencies
         # OpenMPI is leaking all over the place (according to ASAN), so disable it for now
         #run: ./build.sh -t Debug -o "-CIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON" -o "-DCIEUTILS_ENABLE_MPI=ON"
-        run: ./cieutils/build.sh -t Debug -o "-DCIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
+        run: source penv/bin/activate && ./cieutils/build.sh -t Debug -o "-DCIEUTILS_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
       - name: Build
-        run: ./linalg/build.sh -t Debug -o "-DLINALG_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
+        run: source penv/bin/activate && ./linalg/build.sh -t Debug -o "-DLINALG_ENABLE_${{ matrix.sanitizer }}_SANITIZER=ON"
       - name: Run tests
-        run: ./build/bin/linalg_testrunner
+        run: ./linalg/build/bin/linalg_testrunner
 
   generate-docs:
     needs: testrunner
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
+      - name: Clone dependencies
         run: |
           git clone https://github.com/kelofm/cieutils.git --depth 1
           git clone https://github.com/kelofm/linalg.git --depth 1
@@ -68,7 +70,7 @@ jobs:
       - name: Generate docs
         run: |
           cd linalg/docs
-          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/cieutils_doxygen_tagfile" ) | doxygen -
+          ( cat doxyfile ; echo "TAGFILES=../../cieutils/docs/cieutils_doxygen_tagfile=../../../cieutils/docs/html" ) | doxygen -
       - name: Generate root index.html
         run: echo "<meta http-equiv=\"refresh\" content=\"0; docs/html/index.html\">" > index.html
       - name: Update remote
