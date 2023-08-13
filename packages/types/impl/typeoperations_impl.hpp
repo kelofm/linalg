@@ -6,6 +6,7 @@
 
 // --- Linalg Includes ---
 #include "packages/types/inc/functiontypes.hpp"
+#include "packages/types/inc/typeoperations.hpp"
 
 // --- STL Includes ---
 #include <numeric>

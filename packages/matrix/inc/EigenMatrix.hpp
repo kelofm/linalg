@@ -29,42 +29,42 @@ public:
 public:
     EigenMatrix() = default;
 
-    EigenMatrix( const EigenMatrix<MatrixType>& r_rhs );
+    EigenMatrix(const EigenMatrix<MatrixType>& r_rhs);
 
-    EigenMatrix( EigenMatrix<MatrixType>&& r_rhs );
+    EigenMatrix(EigenMatrix<MatrixType>&& r_rhs);
 
-    EigenMatrix( MatrixType&& r_wrapped );
+    EigenMatrix(MatrixType&& r_wrapped);
 
-    EigenMatrix( const MatrixType& r_wrapped );
+    EigenMatrix(const MatrixType& r_wrapped);
 
-    EigenMatrix( const MatrixType&& r_wrapped );
+    EigenMatrix(const MatrixType&& r_wrapped);
 
-    EigenMatrix( size_type rowSize, size_type columnSize )
+    EigenMatrix(size_type rowSize, size_type columnSize)
     requires concepts::ConstructibleFrom<MatrixType, size_type, size_type>;
 
-    EigenMatrix<MatrixType>& operator=( EigenMatrix<MatrixType>&& r_rhs ) = default;
+    EigenMatrix<MatrixType>& operator=(EigenMatrix<MatrixType>&& r_rhs) = default;
 
-    EigenMatrix<MatrixType>& operator=( const EigenMatrix<MatrixType>& r_rhs ) = default;
+    EigenMatrix<MatrixType>& operator=(const EigenMatrix<MatrixType>& r_rhs) = default;
 
-    EigenMatrix<MatrixType>& operator=( MatrixType&& r_wrapped );
+    EigenMatrix<MatrixType>& operator=(MatrixType&& r_wrapped);
 
-    EigenMatrix<MatrixType>& operator=( const MatrixType& r_wrapped );
+    EigenMatrix<MatrixType>& operator=(const MatrixType& r_wrapped);
 
-    EigenMatrix<MatrixType>& operator=( const MatrixType&& r_wrapped );
+    EigenMatrix<MatrixType>& operator=(const MatrixType&& r_wrapped);
 
-    value_type& at( size_type rowIndex,
-                    size_type columnIndex );
+    value_type& at(size_type rowIndex,
+                   size_type columnIndex);
 
-    value_type at( size_type rowIndex,
-                   size_type columnIndex ) const;
+    value_type at(size_type rowIndex,
+                  size_type columnIndex) const;
 
-    value_type& operator()( size_type rowIndex,
-                            size_type columnIndex );
+    value_type& operator()(size_type rowIndex,
+                           size_type columnIndex);
 
-    value_type operator()( size_type rowIndex,
-                           size_type columnIndex ) const;
+    value_type operator()(size_type rowIndex,
+                          size_type columnIndex) const;
 
-    void resize( size_type rowSize, size_type columnSize )
+    void resize(size_type rowSize, size_type columnSize)
     requires concepts::detail::HasResize<MatrixType,size_type,size_type>;
 
     Size rowSize() const;

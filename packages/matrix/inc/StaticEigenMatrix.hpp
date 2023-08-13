@@ -16,7 +16,7 @@ requires (0<RowSize && 0<ColumnSize)
 using StaticEigenMatrix = EigenMatrix<
     Eigen::Matrix<ValueType,
                   RowSize,
-                  ColumnSize >
+                  ColumnSize>
 >;
 
 

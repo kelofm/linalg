@@ -12,52 +12,52 @@ namespace cie::linalg {
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( const EigenMatrix<MatrixType>& r_rhs )
-    : _wrapped( r_rhs._wrapped )
+EigenMatrix<MatrixType>::EigenMatrix(const EigenMatrix<MatrixType>& r_rhs)
+    : _wrapped(r_rhs._wrapped)
 {
 }
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( EigenMatrix<MatrixType>&& r_rhs )
-    : _wrapped( std::move(r_rhs._wrapped) )
+EigenMatrix<MatrixType>::EigenMatrix(EigenMatrix<MatrixType>&& r_rhs)
+    : _wrapped(std::move(r_rhs._wrapped))
 {
 }
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( MatrixType&& r_wrapped )
-    : _wrapped( std::move(r_wrapped) )
+EigenMatrix<MatrixType>::EigenMatrix(MatrixType&& r_wrapped)
+    : _wrapped(std::move(r_wrapped))
 {
 }
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( const MatrixType& r_wrapped )
-    : _wrapped( r_wrapped )
+EigenMatrix<MatrixType>::EigenMatrix(const MatrixType& r_wrapped)
+    : _wrapped(r_wrapped)
 {
 }
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( const MatrixType&& r_wrapped )
-    : _wrapped( r_wrapped )
+EigenMatrix<MatrixType>::EigenMatrix(const MatrixType&& r_wrapped)
+    : _wrapped(r_wrapped)
 {
 }
 
 
 template <class MatrixType>
-EigenMatrix<MatrixType>::EigenMatrix( typename EigenMatrix<MatrixType>::size_type rowSize,
-                                      typename EigenMatrix<MatrixType>::size_type columnSize )
+EigenMatrix<MatrixType>::EigenMatrix(typename EigenMatrix<MatrixType>::size_type rowSize,
+                                     typename EigenMatrix<MatrixType>::size_type columnSize)
 requires concepts::ConstructibleFrom<MatrixType, typename EigenMatrix<MatrixType>::size_type, typename EigenMatrix<MatrixType>::size_type>
-    : _wrapped( rowSize, columnSize )
+    : _wrapped(rowSize, columnSize)
 {
 }
 
 
 template <class MatrixType>
 inline EigenMatrix<MatrixType>&
-EigenMatrix<MatrixType>::operator=( MatrixType&& r_wrapped )
+EigenMatrix<MatrixType>::operator=(MatrixType&& r_wrapped)
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
@@ -70,7 +70,7 @@ EigenMatrix<MatrixType>::operator=( MatrixType&& r_wrapped )
 
 template <class MatrixType>
 inline EigenMatrix<MatrixType>&
-EigenMatrix<MatrixType>::operator=( const MatrixType& r_wrapped )
+EigenMatrix<MatrixType>::operator=(const MatrixType& r_wrapped)
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
@@ -83,7 +83,7 @@ EigenMatrix<MatrixType>::operator=( const MatrixType& r_wrapped )
 
 template <class MatrixType>
 inline EigenMatrix<MatrixType>&
-EigenMatrix<MatrixType>::operator=( const MatrixType&& r_wrapped )
+EigenMatrix<MatrixType>::operator=(const MatrixType&& r_wrapped)
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
@@ -96,55 +96,55 @@ EigenMatrix<MatrixType>::operator=( const MatrixType&& r_wrapped )
 
 template <class MatrixType>
 inline typename EigenMatrix<MatrixType>::value_type&
-EigenMatrix<MatrixType>::at( typename EigenMatrix<MatrixType>::size_type rowIndex,
-                             typename EigenMatrix<MatrixType>::size_type columnIndex )
+EigenMatrix<MatrixType>::at(typename EigenMatrix<MatrixType>::size_type rowIndex,
+                             typename EigenMatrix<MatrixType>::size_type columnIndex)
 {
-    CIE_OUT_OF_RANGE_CHECK( rowIndex < this->rowSize() )
-    CIE_OUT_OF_RANGE_CHECK( columnIndex < this->columnSize() )
+    CIE_OUT_OF_RANGE_CHECK(rowIndex < this->rowSize())
+    CIE_OUT_OF_RANGE_CHECK(columnIndex < this->columnSize())
 
-    return _wrapped( rowIndex, columnIndex );
+    return _wrapped(rowIndex, columnIndex);
 }
 
 
 template <class MatrixType>
 inline typename EigenMatrix<MatrixType>::value_type
-EigenMatrix<MatrixType>::at( typename EigenMatrix<MatrixType>::size_type rowIndex,
-                             typename EigenMatrix<MatrixType>::size_type columnIndex ) const
+EigenMatrix<MatrixType>::at(typename EigenMatrix<MatrixType>::size_type rowIndex,
+                             typename EigenMatrix<MatrixType>::size_type columnIndex) const
 {
-    CIE_OUT_OF_RANGE_CHECK( rowIndex < this->rowSize() )
-    CIE_OUT_OF_RANGE_CHECK( columnIndex < this->columnSize() )
+    CIE_OUT_OF_RANGE_CHECK(rowIndex < this->rowSize())
+    CIE_OUT_OF_RANGE_CHECK(columnIndex < this->columnSize())
 
-    return _wrapped( rowIndex, columnIndex );
+    return _wrapped(rowIndex, columnIndex);
 }
 
 
 template <class MatrixType>
 inline typename EigenMatrix<MatrixType>::value_type&
-EigenMatrix<MatrixType>::operator()( typename EigenMatrix<MatrixType>::size_type rowIndex,
-                                     typename EigenMatrix<MatrixType>::size_type columnIndex )
+EigenMatrix<MatrixType>::operator()(typename EigenMatrix<MatrixType>::size_type rowIndex,
+                                     typename EigenMatrix<MatrixType>::size_type columnIndex)
 {
-    return this->at( rowIndex, columnIndex );
+    return this->at(rowIndex, columnIndex);
 }
 
 
 template <class MatrixType>
 inline typename EigenMatrix<MatrixType>::value_type
-EigenMatrix<MatrixType>::operator()( typename EigenMatrix<MatrixType>::size_type rowIndex,
-                                     typename EigenMatrix<MatrixType>::size_type columnIndex ) const
+EigenMatrix<MatrixType>::operator()(typename EigenMatrix<MatrixType>::size_type rowIndex,
+                                     typename EigenMatrix<MatrixType>::size_type columnIndex) const
 {
-    return this->at( rowIndex, columnIndex );
+    return this->at(rowIndex, columnIndex);
 }
 
 
 template <class MatrixType>
 inline void
-EigenMatrix<MatrixType>::resize( typename EigenMatrix<MatrixType>::size_type rowSize,
-                                 typename EigenMatrix<MatrixType>::size_type columnSize )
+EigenMatrix<MatrixType>::resize(typename EigenMatrix<MatrixType>::size_type rowSize,
+                                 typename EigenMatrix<MatrixType>::size_type columnSize)
 requires concepts::detail::HasResize<MatrixType,typename EigenMatrix<MatrixType>::size_type,typename EigenMatrix<MatrixType>::size_type>
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
-    _wrapped.resize( rowSize, columnSize );
+    _wrapped.resize(rowSize, columnSize);
 
     CIE_END_EXCEPTION_TRACING
 }

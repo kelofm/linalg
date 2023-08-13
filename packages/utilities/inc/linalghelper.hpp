@@ -7,29 +7,26 @@
 
 // --- Internal Includes ---
 #include "packages/types/inc/vectortypes.hpp"
-#include "packages/types/inc/matrix.hpp"
+#include "packages/matrix/inc/DynamicEigenMatrix.hpp"
 
 // --- STL Includes ---
-#include <iomanip>
-#include <ostream>
+#include <iostream>
 #include <stdexcept>
 
-namespace cie::linalg {
-namespace linalghelper {
+
+namespace cie::linalg::linalghelper {
 
 
 template<class RowFunction>
-void writeRow( const RowFunction& vector, Size size, std::ostream& out, Size digits );
+void writeRow(const RowFunction& vector, Size size, std::ostream& out, Size digits);
 
 template<concepts::NumericContainer ContainerType>
-void write( const ContainerType& vector, std::ostream& out = std::cout );
+void write(const ContainerType& vector, std::ostream& out = std::cout);
 
-template<concepts::Numeric ValueType>
-void write( const Matrix<ValueType>& matrix, std::ostream& out = std::cout );
+void write(const DynamicEigenMatrix<double>& matrix, std::ostream& out = std::cout);
 
 
-} // namespace linalghelper
-} // namespace cie::linalg
+} // namespace cie::linalg::linalghelper
 
 #include "packages/utilities/impl/linalghelper_impl.hpp"
 

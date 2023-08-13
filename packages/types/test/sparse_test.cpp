@@ -36,7 +36,7 @@ namespace cie::linalg
  *    [ 27, 29, 28, 30, 37, 36, 35, 26, 32, 31, 25, 22, 19, 21, 20 ]]
  */
 
-CIE_TEST_CASE( "allocateSparseMatrix_test", "[types]" )
+CIE_TEST_CASE("allocateSparseMatrix_test", "[types]")
 {
     std::vector<std::vector<size_t>> locationMaps
     {
@@ -49,24 +49,22 @@ CIE_TEST_CASE( "allocateSparseMatrix_test", "[types]" )
 
     CompressedSparseRowMatrix<size_t> sparseMatrix;
 
-    CIE_TEST_REQUIRE_NOTHROW( sparseMatrix.allocate( locationMaps ) );
+    CIE_TEST_REQUIRE_NOTHROW(sparseMatrix.allocate(locationMaps));
 
-    CIE_TEST_REQUIRE( sparseMatrix.size1( ) == 40 );
-    CIE_TEST_REQUIRE( sparseMatrix.size2( ) == 40 );
+    CIE_TEST_REQUIRE(sparseMatrix.rowSize() == 40);
+    CIE_TEST_REQUIRE(sparseMatrix.columnSize() == 40);
 
-    auto sparseDataStructure = sparseMatrix.release( );
+    auto sparseDataStructure = sparseMatrix.release();
 
-    size_t* indices = std::get<0>( sparseDataStructure );
-    size_t* indptr = std::get<1>( sparseDataStructure );
-    double* data = std::get<2>( sparseDataStructure );
+    size_t* indices = std::get<0>(sparseDataStructure);
+    size_t* indptr = std::get<1>(sparseDataStructure);
+    double* data = std::get<2>(sparseDataStructure);
 
-    for( auto& locationMap : locationMaps )
-    {
-        std::sort( locationMap.begin( ), locationMap.end( ) );
+    for(auto& locationMap : locationMaps) {
+        std::sort(locationMap.begin(), locationMap.end());
     }
 
-    std::vector<std::vector<size_t>> dofElementMapping =
-    {
+    std::vector<std::vector<size_t>> dofElementMapping = {
         { 0 }   , { 0 }   , { 0 }      , { 0, 1 }, { 1 },          // dofs  0 -  4
         { 1 }   , { 0 }   , { 0 }      , { 0 }   , { 0 },          // dofs  5 -  9
         { 0 }   , { 0 }   , { 0, 1 }   , { 0, 1 }, { 1 },          // dofs 10 - 14
@@ -80,44 +78,44 @@ CIE_TEST_CASE( "allocateSparseMatrix_test", "[types]" )
     std::vector<size_t> connectingDofSizes;
     std::vector<size_t> expectedIndices;
 
-    for( const std::vector<size_t>& indices : dofElementMapping )
+    for(const std::vector<size_t>& indices : dofElementMapping)
     {
         std::vector<size_t> concatenated;
 
-        for( const auto& elementIndex : indices )
+        for(const auto& elementIndex : indices)
         {
             const auto& locationMap = locationMaps[elementIndex];
 
-            concatenated.insert( concatenated.end( ), locationMap.begin( ), locationMap.end( ) );
+            concatenated.insert(concatenated.end(), locationMap.begin(), locationMap.end());
         }
 
-        std::sort( concatenated.begin( ), concatenated.end( ) );
-        concatenated.erase( std::unique( concatenated.begin( ), concatenated.end( ) ), concatenated.end( ) );
+        std::sort(concatenated.begin(), concatenated.end());
+        concatenated.erase(std::unique(concatenated.begin(), concatenated.end()), concatenated.end());
 
-        connectingDofSizes.push_back( concatenated.size( ) );
-        expectedIndices.insert( expectedIndices.end( ), concatenated.begin( ), concatenated.end( ) );
+        connectingDofSizes.push_back(concatenated.size());
+        expectedIndices.insert(expectedIndices.end(), concatenated.begin(), concatenated.end());
     };
 
-    size_t nnz = expectedIndices.size( );
+    size_t nnz = expectedIndices.size();
 
-    CIE_TEST_REQUIRE( indptr[40] == nnz );
+    CIE_TEST_REQUIRE(indptr[40] == nnz);
 
-    for( size_t iEntry = 0; iEntry < nnz; ++iEntry )
+    for(size_t iEntry = 0; iEntry < nnz; ++iEntry)
     {
-        CIE_TEST_CHECK( indices[iEntry] == expectedIndices[iEntry] );
-        CIE_TEST_CHECK( data[iEntry] == 0.0 );
+        CIE_TEST_CHECK(indices[iEntry] == expectedIndices[iEntry]);
+        CIE_TEST_CHECK(data[iEntry] == 0.0);
     }
 
     size_t rowPtr = 0;
 
-    for( size_t iDof = 0; iDof < 40; ++iDof )
+    for(size_t iDof = 0; iDof < 40; ++iDof)
     {
-        CIE_TEST_CHECK( indptr[iDof] == rowPtr );
+        CIE_TEST_CHECK(indptr[iDof] == rowPtr);
 
         rowPtr += connectingDofSizes[iDof];
     }
 
-    CIE_TEST_CHECK( indptr[40] == rowPtr );
+    CIE_TEST_CHECK(indptr[40] == rowPtr);
 
     delete[] indptr;
     delete[] indices;

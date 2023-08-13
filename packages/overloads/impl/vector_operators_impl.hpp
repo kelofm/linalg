@@ -3,6 +3,7 @@
 
 // --- Utility Includes ---
 #include "packages/macros/inc/exceptions.hpp"
+#include <packages/macros/inc/checks.hpp>
 
 
 namespace cie::linalg {
@@ -134,6 +135,7 @@ operator+( const AbsEigenVector<EigenType, StaticArray<ValueType,ArraySize>>& r_
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
+    CIE_OUT_OF_RANGE_CHECK(r_lhs.size() == r_rhs.size())
     EigenArray<ValueType,ArraySize> output = r_lhs.base();
     output.wrapped() += r_rhs.wrapped();
 
@@ -150,6 +152,7 @@ operator-( const AbsEigenVector<EigenType, StaticArray<ValueType,ArraySize>>& r_
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
+    CIE_OUT_OF_RANGE_CHECK(r_lhs.size() == r_rhs.size())
     EigenArray<ValueType,ArraySize> output = r_lhs.base();
     output.wrapped() -= r_rhs.wrapped();
 
@@ -166,6 +169,7 @@ operator+( const AbsEigenVector<EigenType, std::vector<ValueType,Arguments...>>&
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
+    CIE_OUT_OF_RANGE_CHECK(r_lhs.size() == r_rhs.size())
     EigenVector<ValueType,Arguments...> output = r_lhs.base();
     output.wrapped() += r_rhs.wrapped();
 
@@ -181,6 +185,7 @@ operator-( const AbsEigenVector<EigenType, std::vector<ValueType,Arguments...>>&
 {
     CIE_BEGIN_EXCEPTION_TRACING
 
+    CIE_OUT_OF_RANGE_CHECK(r_lhs.size() == r_rhs.size())
     EigenVector<ValueType,Arguments...> output = r_lhs.base();
     output.wrapped() -= r_rhs.wrapped();
 

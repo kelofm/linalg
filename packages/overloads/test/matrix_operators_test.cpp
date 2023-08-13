@@ -14,7 +14,7 @@ CIE_TEST_CASE( "matrix operators", "[overloads]" )
 
     {
         CIE_TEST_CASE_INIT( "DynamicEigenMatrix" )
-            
+
         DynamicEigenMatrix<int> matrix( 2, 3 );
         matrix( 0, 0 ) = 0;
         matrix( 0, 1 ) = 1;
@@ -63,21 +63,6 @@ CIE_TEST_CASE( "matrix operators", "[overloads]" )
             CIE_TEST_REQUIRE( result2.size() == 2 );
             CIE_TEST_CHECK( result2[0] == 80 );
             CIE_TEST_CHECK( result2[1] == 260 );
-
-            EigenVector<int> vector2( 2 );
-            vector2[0] = 10;
-            vector2[1] = 20;
-
-            CIE_TEST_REQUIRE_NOTHROW( vector2 * matrix );
-            auto result3 = vector2 * matrix;
-
-            CIE_TEST_REQUIRE( result3.size() == 3 );
-            CIE_TEST_CHECK( result3[0] == 60 );
-            CIE_TEST_CHECK( result3[1] == 90 );
-            CIE_TEST_CHECK( result3[2] == 120 );
-
-            CIE_TEST_CHECK_THROWS( matrix * vector2 );
-            CIE_TEST_CHECK_THROWS( vector3 * matrix );
         } // matrix * vector
 
         {
@@ -153,7 +138,7 @@ CIE_TEST_CASE( "matrix operators", "[overloads]" )
 
     {
         CIE_TEST_CASE_INIT( "DynamicEigenMatrix" )
-            
+
         StaticEigenMatrix<int, 2, 3> matrix;
         matrix( 0, 0 ) = 0;
         matrix( 0, 1 ) = 1;
@@ -273,7 +258,7 @@ CIE_TEST_CASE( "matrix operators", "[overloads]" )
             lhs( 1, 1 ) = 3;
             lhs( 2, 0 ) = 4;
             lhs( 2, 1 ) = 5;
-            
+
             StaticEigenMatrix<int, 3, 3> result;
 
             CIE_TEST_CHECK_NOTHROW( result = lhs * matrix );

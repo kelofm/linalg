@@ -15,7 +15,7 @@ template <class ValueType>
 using DynamicEigenMatrix = EigenMatrix<
     Eigen::Matrix< ValueType,
                    Eigen::Dynamic,
-                   Eigen::Dynamic >
+                   Eigen::Dynamic>
 >;
 
 

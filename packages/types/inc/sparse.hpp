@@ -2,7 +2,7 @@
 #define CIE_LINALG_SPARSE_HPP
 
 // --- Internal Includes ---
-#include "packages/types/inc/matrix.hpp"
+#include "packages/matrix/inc/DynamicEigenMatrix.hpp"
 
 // --- Utility Includes ---
 #include "packages/compile_time/packages/concepts/inc/basic_concepts.hpp"
@@ -13,51 +13,57 @@
 #include <tuple>
 #include <cstddef>
 
+
 namespace cie::linalg {
 
 template<concepts::Numeric IndexType, concepts::Numeric ValueType = Double>
 class CompressedSparseRowMatrix
 {
 public:
-    typedef IndexType   index_type;
-    typedef ValueType   value_type;
+    typedef IndexType index_type;
+    typedef ValueType value_type;
 
-    explicit CompressedSparseRowMatrix( );
+    explicit CompressedSparseRowMatrix();
 
-    void allocate( const std::vector<std::vector<Size>>& locationMaps );
+    void allocate(const std::vector<std::vector<Size>>& locationMaps);
 
-    Size size1( ) const;
-    Size size2( ) const;
-    IndexType nnz( ) const;
+    Size rowSize() const;
 
-    ValueType operator()( Size i, Size j ) const;
-    std::vector<ValueType> operator*( const std::vector<ValueType>& vector );
+    Size columnSize() const;
 
-    void scatter( const Matrix<ValueType>& elementMatrix,
-                  const std::vector<Size>& locationMap );
+    IndexType nnz() const;
+
+    ValueType operator()(Size i, Size j) const;
+    std::vector<ValueType> operator*(const std::vector<ValueType>& vector);
+
+    void scatter(const DynamicEigenMatrix<ValueType>& elementMatrix,
+                 const std::vector<Size>& locationMap);
 
     //! Obtain sparse data structure and set matrix to zero
-    std::tuple<IndexType*, IndexType*, ValueType*, Size> release( );
+    std::tuple<IndexType*, IndexType*, ValueType*, Size> release();
 
 private:
     IndexType* indices_;
+
     IndexType* indptr_;
+
     ValueType* data_;
 
-    Size size1_, size2_;
+    Size rowSize_, columnSize_;
 
-    void cleanup( );
+    void cleanup();
 
 public:
-    ~CompressedSparseRowMatrix( );
+    ~CompressedSparseRowMatrix();
 
     // disable copying
-    CompressedSparseRowMatrix( const CompressedSparseRowMatrix& ) = delete;
-    CompressedSparseRowMatrix& operator=( const CompressedSparseRowMatrix& ) = delete;
+    CompressedSparseRowMatrix(const CompressedSparseRowMatrix&) = delete;
+
+    CompressedSparseRowMatrix& operator=(const CompressedSparseRowMatrix&) = delete;
 };
 
 }
 
 #include "packages/types/impl/sparse_impl.hpp"
 
-#endif // CIE_SPARSE_HPP
+#endif // CIE_LINALG_SPARSE_HPP
