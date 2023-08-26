@@ -1,6 +1,9 @@
 #ifndef CIE_LINALG_EIGEN_MATRIX_HPP
 #define CIE_LINALG_EIGEN_MATRIX_HPP
 
+// --- External Inlcudes ---
+#include "Eigen/Dense"
+
 // --- Utility Includes ---
 #include "packages/types/inc/types.hpp"
 #include "packages/compile_time/packages/concepts/inc/container_concepts.hpp"
@@ -12,51 +15,62 @@
 namespace cie::linalg {
 
 
-template <class MatrixType>
+template <class TMatrix>
 class EigenMatrix
 {
 public:
-    using Wrapped = MatrixType;
+    using Wrapped = TMatrix;
 
-    using value_type = typename MatrixType::value_type;
+    using value_type = typename TMatrix::value_type;
 
     using size_type  = Size;
 
-    static const int RowTag    = MatrixType::RowsAtCompileTime;
+    static const int RowTag    = TMatrix::RowsAtCompileTime;
 
-    static const int ColumnTag = MatrixType::ColsAtCompileTime;
+    static const int ColumnTag = TMatrix::ColsAtCompileTime;
 
 public:
-    EigenMatrix() = default;
+    EigenMatrix() noexcept = default;
 
-    EigenMatrix(const EigenMatrix<MatrixType>& r_rhs);
+    EigenMatrix(const EigenMatrix<TMatrix>& r_rhs);
 
-    EigenMatrix(EigenMatrix<MatrixType>&& r_rhs);
+    EigenMatrix(EigenMatrix<TMatrix>&& r_rhs) noexcept;
 
-    EigenMatrix(MatrixType&& r_wrapped);
+    EigenMatrix(TMatrix&& r_wrapped);
 
-    EigenMatrix(const MatrixType& r_wrapped);
-
-    EigenMatrix(const MatrixType&& r_wrapped);
+    EigenMatrix(const TMatrix& r_wrapped);
 
     EigenMatrix(size_type rowSize, size_type columnSize)
-    requires concepts::ConstructibleFrom<MatrixType, size_type, size_type>;
+    requires concepts::ConstructibleFrom<TMatrix, size_type, size_type>;
 
-    EigenMatrix<MatrixType>& operator=(EigenMatrix<MatrixType>&& r_rhs) = default;
+    EigenMatrix(size_type size)
+    requires (RowTag == 1 || ColumnTag == 1);
 
-    EigenMatrix<MatrixType>& operator=(const EigenMatrix<MatrixType>& r_rhs) = default;
+    EigenMatrix(Ref<const std::initializer_list<value_type>> r_components);
 
-    EigenMatrix<MatrixType>& operator=(MatrixType&& r_wrapped);
+    EigenMatrix<TMatrix>& operator=(EigenMatrix<TMatrix>&& r_rhs) = default;
 
-    EigenMatrix<MatrixType>& operator=(const MatrixType& r_wrapped);
+    EigenMatrix<TMatrix>& operator=(const EigenMatrix<TMatrix>& r_rhs) = default;
 
-    EigenMatrix<MatrixType>& operator=(const MatrixType&& r_wrapped);
+    EigenMatrix<TMatrix>& operator=(TMatrix&& r_wrapped);
+
+    EigenMatrix<TMatrix>& operator=(const TMatrix& r_wrapped);
+
+    EigenMatrix<TMatrix>& operator=(const TMatrix&& r_wrapped);
+
+    Ref<value_type> at(size_type index) noexcept;
+
+    Ref<const value_type> at(size_type) const noexcept;
 
     value_type& at(size_type rowIndex,
                    size_type columnIndex);
 
     value_type at(size_type rowIndex,
                   size_type columnIndex) const;
+
+    Ref<value_type> operator[](size_type index) noexcept;
+
+    Ref<const value_type> operator[](size_type index) const noexcept;
 
     value_type& operator()(size_type rowIndex,
                            size_type columnIndex);
@@ -65,31 +79,51 @@ public:
                           size_type columnIndex) const;
 
     void resize(size_type rowSize, size_type columnSize)
-    requires concepts::detail::HasResize<MatrixType,size_type,size_type>;
+    requires concepts::detail::HasResize<TMatrix,size_type,size_type>;
 
-    Size rowSize() const;
+    void resize(size_type rowSize, size_type columnSize)
+    requires (!concepts::detail::HasResize<TMatrix,size_type,size_type>);
 
-    Size columnSize() const;
+    void resize(size_type size)
+    requires (RowTag == 1 || ColumnTag == 1);
 
-    MatrixType& wrapped();
+    Size rowSize() const noexcept;
 
-    const MatrixType& wrapped() const;
+    Size columnSize() const noexcept;
 
-    explicit operator MatrixType& ();
+    Size size() const noexcept;
 
-    explicit operator const MatrixType& () const;
+    Ptr<const value_type> begin() const noexcept;
+
+    Ptr<value_type> begin() noexcept;
+
+    Ptr<const value_type> end() const noexcept;
+
+    Ptr<value_type> end() noexcept;
+
+    Ptr<const value_type> data() const noexcept;
+
+    Ptr<value_type> data() noexcept;
+
+    TMatrix& wrapped();
+
+    const TMatrix& wrapped() const;
+
+    explicit operator TMatrix& ();
+
+    explicit operator const TMatrix& () const;
 
     static EigenMatrix makeZeroMatrix();
 
     static EigenMatrix makeIdentityMatrix();
 
 protected:
-    MatrixType _wrapped;
+    TMatrix _wrapped;
 };
 
 
-template <class MatrixType>
-std::ostream& operator<<(std::ostream& r_stream, const EigenMatrix<MatrixType>& r_matrix);
+template <class TMatrix>
+std::ostream& operator<<(std::ostream& r_stream, const EigenMatrix<TMatrix>& r_matrix);
 
 
 } // namespace cie::linalg

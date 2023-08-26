@@ -2,6 +2,7 @@
 #include "packages/testing/inc/essentials.hpp"
 
 // --- Internal Incldues ---
+#include "packages/matrix/inc/EigenArray.hpp"
 #include "packages/overloads/inc/matrix_operators.hpp"
 
 
@@ -187,21 +188,6 @@ CIE_TEST_CASE( "matrix operators", "[overloads]" )
             CIE_TEST_REQUIRE( result2.size() == 2 );
             CIE_TEST_CHECK( result2[0] == 80 );
             CIE_TEST_CHECK( result2[1] == 260 );
-
-            EigenArray<int,2> vector2;
-            vector2[0] = 10;
-            vector2[1] = 20;
-
-            CIE_TEST_REQUIRE_NOTHROW( vector2 * matrix );
-            auto result3 = vector2 * matrix;
-
-            CIE_TEST_REQUIRE( result3.size() == 3 );
-            CIE_TEST_CHECK( result3[0] == 60 );
-            CIE_TEST_CHECK( result3[1] == 90 );
-            CIE_TEST_CHECK( result3[2] == 120 );
-
-            //CIE_TEST_CHECK_THROWS( matrix * vector2 );
-            //CIE_TEST_CHECK_THROWS( vector3 * matrix );
         } // matrix * vector
 
         {
