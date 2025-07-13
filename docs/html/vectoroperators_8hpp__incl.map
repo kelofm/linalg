@@ -1,0 +1,23 @@
+<map id="vectoroperators.hpp" name="vectoroperators.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="320,5,473,31"/>
+<area shape="rect" id="Node000002" href="/home/runner/work/linalg/linalg/cieutils/docs/cieutils_doxygen_tagfile$container__concepts_8hpp.html" title=" " alt="" coords="5,79,185,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,33,200,78,198,73,355,28"/>
+<area shape="rect" id="Node000003" href="$vectortypes_8hpp.html" title=" " alt="" coords="210,86,357,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="383,33,321,80,318,75,380,29"/>
+<area shape="rect" id="Node000006" href="$arraytypes_8hpp.html" title=" " alt="" coords="438,86,585,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="414,29,476,75,473,80,411,33"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="609,79,771,133"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="437,28,596,75,595,80,435,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="132,189,195,214"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="261,128,190,183,187,178,257,124"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="219,189,289,214"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="280,127,264,176,259,175,275,125"/>
+<area shape="rect" id="Node000007" href="/home/runner/work/linalg/linalg/cieutils/docs/cieutils_doxygen_tagfile$StaticArray_8hpp.html" title=" " alt="" coords="313,181,488,221"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="491,128,435,174,432,170,487,124"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="513,189,569,214"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="520,125,535,175,530,176,515,127"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="593,189,664,214"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="537,124,605,178,601,182,533,128"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="689,189,755,214"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="555,124,685,181,682,185,553,129"/>
+</map>

@@ -1,0 +1,24 @@
+<map id="EigenMatrix.hpp" name="EigenMatrix.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="397,5,525,31"/>
+<area shape="rect" id="Node000002" href="$DynamicEigenMatrix_8hpp.html" title=" " alt="" coords="106,79,293,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="406,37,242,81,241,76,405,32"/>
+<area shape="rect" id="Node000008" href="$EigenArray_8hpp.html" title=" " alt="" coords="317,79,436,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="438,42,392,80,389,76,435,38"/>
+<area shape="rect" id="Node000009" href="$SparseEigenMatrix_8hpp.html" title=" " alt="" coords="460,79,632,104"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="486,37,534,76,530,80,483,41"/>
+<area shape="rect" id="Node000010" href="$StaticEigenMatrix_8hpp.html" title=" " alt="" coords="657,79,822,104"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="519,31,695,76,694,81,518,37"/>
+<area shape="rect" id="Node000003" href="$linalghelper_8hpp.html" title=" " alt="" coords="5,152,132,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="167,113,91,154,89,149,165,108"/>
+<area shape="rect" id="Node000005" href="$linalgutilities_8hpp.html" title=" " alt="" coords="52,299,187,324"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="193,118,144,252,126,300,121,298,140,250,188,116"/>
+<area shape="rect" id="Node000006" href="$matrix__operators_8hpp.html" title=" " alt="" coords="325,152,487,177"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="246,106,373,149,372,154,245,111"/>
+<area shape="rect" id="Node000007" href="$sparse_8hpp.html" title=" " alt="" coords="207,152,301,177"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="219,113,247,150,243,154,215,117"/>
+<area shape="rect" id="Node000004" href="$errortypes_8hpp.html" title=" " alt="" coords="13,225,130,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="72,191,74,225,68,225,67,191"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="89,261,114,297,109,300,85,264"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="389,116,404,151,399,153,384,118"/>
+<area shape="poly" id="edge12_Node000010_Node000006" title=" " alt="" coords="673,109,461,154,459,149,672,104"/>
+</map>
