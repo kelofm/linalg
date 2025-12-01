@@ -1,0 +1,41 @@
+<map id="linalgutilities.hpp" name="linalgutilities.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="564,5,699,31"/>
+<area shape="rect" id="Node000002" href="/home/runner/work/linalg/linalg/cieutils/docs/cieutils_doxygen_tagfile$types_8hpp.html" title=" " alt="" coords="835,438,982,478"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="699,23,832,42,909,56,985,73,1055,94,1112,120,1134,134,1151,150,1162,167,1166,185,1166,276,1162,307,1150,334,1132,358,1109,379,1054,413,996,437,994,432,1052,408,1105,375,1128,355,1145,331,1157,305,1161,276,1161,186,1157,169,1147,153,1131,138,1110,124,1053,99,984,78,908,61,831,47,698,29"/>
+<area shape="rect" id="Node000003" href="$DynamicEigenMatrix_8hpp.html" title=" " alt="" coords="173,255,364,295"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="610,33,510,88,446,126,385,169,338,208,298,247,294,243,334,204,382,165,444,122,507,83,607,28"/>
+<area shape="rect" id="Node000009" href="$errortypes_8hpp.html" title=" " alt="" coords="559,79,703,119"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="634,31,634,65,629,65,629,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,445,108,471"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="248,297,190,345,82,438,78,434,187,341,244,293"/>
+<area shape="rect" id="Node000005" href="$EigenMatrix_8hpp.html" title=" " alt="" coords="201,343,355,383"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="273,295,277,329,272,329,268,295"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="355,375,384,380,822,443,821,448,383,385,355,381"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="234,385,98,442,96,437,232,380"/>
+<area shape="rect" id="Node000006" href="/home/runner/work/linalg/linalg/cieutils/docs/cieutils_doxygen_tagfile$container__concepts_8hpp.html" title=" " alt="" coords="425,431,605,485"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="327,380,437,423,435,428,325,385"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="325,445,401,471"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="297,381,345,433,341,437,293,385"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="133,438,301,478"/>
+<area shape="poly" id="edge9_Node000005_Node000008" title=" " alt="" coords="268,384,239,428,234,425,263,381"/>
+<area shape="poly" id="edge12_Node000009_Node000002" title=" " alt="" coords="601,121,569,144,534,175,502,212,480,256,470,293,468,324,477,352,500,381,522,395,553,408,637,428,732,441,821,449,821,455,732,447,636,433,552,413,519,400,496,385,472,355,463,325,465,292,476,254,498,210,530,171,565,140,598,117"/>
+<area shape="rect" id="Node000010" href="/home/runner/work/linalg/linalg/cieutils/docs/cieutils_doxygen_tagfile$exception_8hpp.html" title=" " alt="" coords="732,167,891,207"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="672,116,761,159,759,163,670,121"/>
+<area shape="rect" id="Node000011" href="$linalghelper_8hpp.html" title=" " alt="" coords="555,167,708,207"/>
+<area shape="poly" id="edge13_Node000009_Node000011" title=" " alt="" coords="634,119,634,153,629,153,629,119"/>
+<area shape="poly" id="edge15_Node000011_Node000002" title=" " alt="" coords="709,202,721,204,805,209,914,210,969,213,1019,220,1060,233,1089,253,1103,278,1104,304,1092,330,1073,355,1019,399,961,434,958,429,1016,395,1069,351,1088,327,1098,303,1098,280,1085,256,1058,238,1018,226,969,219,914,215,804,214,720,209,708,207"/>
+<area shape="poly" id="edge19_Node000011_Node000003" title=" " alt="" coords="555,209,362,254,361,249,554,204"/>
+<area shape="poly" id="edge14_Node000011_Node000006" title=" " alt="" coords="556,205,513,225,495,239,480,256,471,275,466,295,468,339,479,381,496,417,491,420,474,383,462,339,461,295,466,273,476,253,491,235,510,220,553,200"/>
+<area shape="rect" id="Node000012" href="$vectortypes_8hpp.html" title=" " alt="" coords="490,255,637,295"/>
+<area shape="poly" id="edge16_Node000011_Node000012" title=" " alt="" coords="618,209,589,245,585,242,614,205"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="661,262,741,287"/>
+<area shape="poly" id="edge20_Node000011_Node000015" title=" " alt="" coords="649,205,685,249,681,253,645,209"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="765,262,852,287"/>
+<area shape="poly" id="edge21_Node000011_Node000016" title=" " alt="" coords="671,204,774,254,772,258,669,209"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="875,255,1075,295"/>
+<area shape="poly" id="edge22_Node000011_Node000017" title=" " alt="" coords="707,204,888,249,886,254,706,209"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="604,350,667,375"/>
+<area shape="poly" id="edge17_Node000012_Node000013" title=" " alt="" coords="581,293,619,337,615,341,577,297"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="509,350,580,375"/>
+<area shape="poly" id="edge18_Node000012_Node000014" title=" " alt="" coords="562,296,553,337,548,336,557,294"/>
+</map>
